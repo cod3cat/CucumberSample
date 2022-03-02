@@ -21,20 +21,4 @@ public class MyStepdefs {
         // Write code here that turns the phrase above into concrete actions
         System.out.println("Then I see 1 item in cart: " +product.getName());
     }
-
-    @Given("I'm a dummy")
-    public void iMADummy() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-    @When("I do dummy things")
-    public void iDoDummyThings() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-    @Then("dummy things happen")
-    public void dummyThingsHappen() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 }
