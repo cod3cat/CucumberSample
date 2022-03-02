@@ -8,5 +8,5 @@ Feature: Add to cart
       Then I see <quantity> "<product name>" in the cart
 
       Examples:
-      | product name | quantity |
-      | Blue shoes   |   1      |
+        | product name | quantity |
+        | Blue shoes   | 1        |

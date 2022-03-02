@@ -1,5 +1,6 @@
 package awesomeCucumber.stepDefs;
 
+import awesomeCucumber.objects.Product;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,15 +11,15 @@ public class MyStepdefs {
         // Write code here that turns the phrase above into concrete actions
         System.out.println("I'm on store page");
     }
-    @When("I add a {string} to the cart")
-    public void iAddAToTheCart(String string) {
+    @When("I add a {product} to the cart")
+    public void iAddAToTheCart(Product product) {
         // Write code here that turns the phrase above into concrete actions
-        System.out.println("I added things to cart");
+        System.out.println("I added things to cart : " +product.getName());
     }
-    @Then("I see {int} {string} in the cart")
-    public void iSeeInTheCart(Integer int1, String string) {
+    @Then("I see {int} {product} in the cart")
+    public void iSeeInTheCart(Integer int1, Product product) {
         // Write code here that turns the phrase above into concrete actions
-        System.out.println("Then I see 1 item in cart");
+        System.out.println("Then I see 1 item in cart: " +product.getName());
     }
 
     @Given("I'm a dummy")
