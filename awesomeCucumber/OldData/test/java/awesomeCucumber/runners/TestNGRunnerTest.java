@@ -6,7 +6,8 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(plugin =
         {"pretty", "summary", "html:target/cucumber.html"},
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        tags = "@scenario2",
+        tags = "@featureTag",
+        //dryRun = true,
         glue = {"awesomeCucumber.stepDefs", "awesomeCucumber.hooks", "awesomeCucumber.types"},
         features = "src/test/resources/awesomeCucumber"
 )
