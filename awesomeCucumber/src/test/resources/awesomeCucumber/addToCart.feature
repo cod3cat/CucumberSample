@@ -10,3 +10,4 @@ Feature: Add to cart
       Examples:
         | product name | quantity |
         | Blue shoes   | 1        |
+        | Red shoes    | 1        |
