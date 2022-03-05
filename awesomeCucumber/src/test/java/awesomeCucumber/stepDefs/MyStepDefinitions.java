@@ -1,12 +1,12 @@
 package awesomeCucumber.stepDefs;
 
+import awesomeCucumber.factory.DriverFactory;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -18,9 +18,7 @@ public class MyStepDefinitions {
 
     @Given("I'm on the store page")
     public void iMOnTheStorePage() {
-        System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        driver = DriverFactory.getDriver();
         driver.get("https://askomdch.com/store");
     }
     @When("I add a {string} to the cart")
@@ -44,9 +42,7 @@ public class MyStepDefinitions {
 
     @Given("I'm a guest customer")
     public void iMAGuestCustomer() {
-        System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        driver = DriverFactory.getDriver();
         driver.get("https://askomdch.com/store");
     }
 
