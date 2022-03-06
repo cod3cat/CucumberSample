@@ -1,6 +1,7 @@
 package awesomeCucumber.stepDefs;
 
 import awesomeCucumber.factory.DriverFactory;
+import awesomeCucumber.pages.StorePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,16 +20,14 @@ public class MyStepDefinitions {
     @Given("I'm on the store page")
     public void iMOnTheStorePage() {
         driver = DriverFactory.getDriver();
-        driver.get("https://askomdch.com/store");
+        new StorePage(driver).load("https://askomdch.com/store");
     }
+
     @When("I add a {string} to the cart")
-    public void iAddAToTheCart(String productName) throws InterruptedException {
-        By addToCartButton = By.cssSelector("a[aria-label='Add " + productName + " to your cart']");
-        driver.findElement(addToCartButton).click();
-        Thread.sleep(3000);
-        By viewCartLink = By.cssSelector("a[title = 'View cart']");
-        driver.findElement(viewCartLink).click();
+    public void iAddAToTheCart(String productName) {
+        new StorePage(driver).addToCart(productName);
     }
+
     @Then("I see {int} {string} in the cart")
     public void iSeeInTheCart(int quantity, String productName) {
         By productNameField = By.cssSelector("td[class = 'prodcut-name'] a");
@@ -43,17 +42,12 @@ public class MyStepDefinitions {
     @Given("I'm a guest customer")
     public void iMAGuestCustomer() {
         driver = DriverFactory.getDriver();
-        driver.get("https://askomdch.com/store");
+        new StorePage(driver).load("https://askomdch.com/store");
     }
 
     @And("I have a product in the cart")
-    public void iHaveAProductInTheCart() throws InterruptedException {
-        Thread.sleep(2000);
-        By addToCartButton = By.cssSelector("a[aria-label='Add “Blue Shoes” to your cart']");
-        driver.findElement(addToCartButton).click();
-        Thread.sleep(3000);
-        By viewCartLink = By.cssSelector("a[title = 'View cart']");
-        driver.findElement(viewCartLink).click();
+    public void iHaveAProductInTheCart() {
+        new StorePage(driver).addToCart("Blue Shoes");
     }
 
     @And("I'm on the Checkout page")
