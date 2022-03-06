@@ -11,7 +11,7 @@ public class StorePage extends BasePage {
     @FindBy(css = "a[title = 'View cart']") private WebElement viewCartLink;
 
     public void addToCart(String productName) {
-        By addToCartButton = By.cssSelector("a[aria-label='Add " + productName + " to your cart']");
+        By addToCartButton = By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
         wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
         wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
     }
