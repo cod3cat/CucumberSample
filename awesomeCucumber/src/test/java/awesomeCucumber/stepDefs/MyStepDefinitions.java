@@ -1,6 +1,8 @@
 package awesomeCucumber.stepDefs;
 
 import awesomeCucumber.factory.DriverFactory;
+import awesomeCucumber.pages.CartPage;
+import awesomeCucumber.pages.CheckoutPage;
 import awesomeCucumber.pages.StorePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -30,13 +32,10 @@ public class MyStepDefinitions {
 
     @Then("I see {int} {string} in the cart")
     public void iSeeInTheCart(int quantity, String productName) {
-        By productNameField = By.cssSelector("td[class = 'prodcut-name'] a");
-        String actualProductName = driver.findElement(productNameField).getText();
-        By productQuantityField = By.cssSelector("input[type = \"number\"]");
-        String actualProductQuantity = driver.findElement(productQuantityField).getAttribute("value");
+        CartPage cartPage = new CartPage(driver);
 
-        Assert.assertEquals(actualProductName, productName);
-        Assert.assertEquals(Integer.parseInt(actualProductQuantity), quantity);
+        Assert.assertEquals(productName, cartPage.getProductName());
+        Assert.assertEquals(quantity, cartPage.getProductQuantity());
     }
 
     @Given("I'm a guest customer")
@@ -52,49 +51,28 @@ public class MyStepDefinitions {
 
     @And("I'm on the Checkout page")
     public void iMOnTheCheckoutPage() {
-        By proceedToCheckOutButton = By.cssSelector(".checkout-button");
-        driver.findElement(proceedToCheckOutButton).click();
+        new CartPage(driver).checkOut();
     }
 
     @When("I provide billing details")
     public void iProvideBillingDetails(List<Map<String, String>> billingDetails) {
-        By billingFirstNameField = By.id("billing_first_name");
-        By billingLastNameField = By.id("billing_last_name");
-        By billingAddressOneField = By.id("billing_address_1");
-        By billingCityField = By.id("billing_city");
-        By billingStateDropdown = By.id("billing_state");
-        By billingZipField = By.id("billing_postcode");
-        By billingEmailAddress = By.id("billing_email");
-
-        driver.findElement(billingFirstNameField).clear();
-        driver.findElement(billingFirstNameField).sendKeys(billingDetails.get(0).get("firstName"));
-        driver.findElement(billingLastNameField).clear();
-        driver.findElement(billingLastNameField).sendKeys(billingDetails.get(0).get("lastName"));
-        driver.findElement(billingAddressOneField).clear();
-        driver.findElement(billingAddressOneField).sendKeys(billingDetails.get(0).get("address_line1"));
-        driver.findElement(billingCityField).clear();
-        driver.findElement(billingCityField).sendKeys(billingDetails.get(0).get("city"));
-
-        Select select = new Select(driver.findElement(billingStateDropdown));
-        select.selectByVisibleText(billingDetails.get(0).get("state"));
-
-        driver.findElement(billingZipField).clear();
-        driver.findElement(billingZipField).sendKeys(billingDetails.get(0).get("zip"));
-        driver.findElement(billingEmailAddress).clear();
-        driver.findElement(billingEmailAddress).sendKeys(billingDetails.get(0).get("email"));
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.setBillingDetails(billingDetails.get(0).get("firstName"),
+                billingDetails.get(0).get("lastName"),
+                billingDetails.get(0).get("address_line1"),
+                billingDetails.get(0).get("city"),
+                billingDetails.get(0).get("state"),
+                billingDetails.get(0).get("zip"),
+                billingDetails.get(0).get("email"));
     }
 
     @And("I place an order")
-    public void iPlaceAnOrder() throws InterruptedException {
-        By placeOrderButton = By.id("place_order");
-        driver.findElement(placeOrderButton).click();
-        Thread.sleep(3000);
+    public void iPlaceAnOrder() {
+        new CheckoutPage(driver).placeOrder();
     }
 
     @Then("the order should be placed successfully")
     public void theOrderShouldBePlacedSuccessfully() {
-        By noticeText = By.cssSelector(".woocommerce-notice");
-        String actualNoticeMessage = driver.findElement(noticeText).getText();
-        Assert.assertEquals(actualNoticeMessage, "Thank you. Your order has been received.");
+        Assert.assertEquals(new CheckoutPage(driver).getNotice(), "Thank you. Your order has been received.");
     }
 }
