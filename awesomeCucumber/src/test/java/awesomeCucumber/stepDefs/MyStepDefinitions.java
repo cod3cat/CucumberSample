@@ -1,6 +1,7 @@
 package awesomeCucumber.stepDefs;
 
 import awesomeCucumber.domainObjects.BillingDetails;
+import awesomeCucumber.domainObjects.Product;
 import awesomeCucumber.factory.DriverFactory;
 import awesomeCucumber.pages.CartPage;
 import awesomeCucumber.pages.CheckoutPage;
@@ -22,16 +23,16 @@ public class MyStepDefinitions {
         new StorePage(driver).load("https://askomdch.com/store");
     }
 
-    @When("I add a {string} to the cart")
-    public void iAddAToTheCart(String productName) {
-        new StorePage(driver).addToCart(productName);
+    @When("I add a {product} to the cart")
+    public void iAddAToTheCart(Product product) {
+        new StorePage(driver).addToCart(product.getName());
     }
 
-    @Then("I see {int} {string} in the cart")
-    public void iSeeInTheCart(int quantity, String productName) {
+    @Then("I see {int} {product} in the cart")
+    public void iSeeInTheCart(int quantity, Product product) {
         CartPage cartPage = new CartPage(driver);
 
-        Assert.assertEquals(productName, cartPage.getProductName());
+        Assert.assertEquals(product.getName(), cartPage.getProductName());
         Assert.assertEquals(quantity, cartPage.getProductQuantity());
     }
 
