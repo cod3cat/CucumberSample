@@ -1,5 +1,6 @@
 package awesomeCucumber.stepDefs;
 
+import awesomeCucumber.domainObjects.BillingDetails;
 import awesomeCucumber.factory.DriverFactory;
 import awesomeCucumber.pages.CartPage;
 import awesomeCucumber.pages.CheckoutPage;
@@ -8,16 +9,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
-import java.util.List;
-import java.util.Map;
 
 public class MyStepDefinitions {
     private WebDriver driver;
+    private BillingDetails billingDetails;
 
     @Given("I'm on the store page")
     public void iMOnTheStorePage() {
@@ -44,6 +41,11 @@ public class MyStepDefinitions {
         new StorePage(driver).load("https://askomdch.com/store");
     }
 
+    @Given("my billing details are")
+    public void my_billing_details_are(BillingDetails billingDetails) {
+        this.billingDetails = billingDetails;
+    }
+
     @And("I have a product in the cart")
     public void iHaveAProductInTheCart() {
         new StorePage(driver).addToCart("Blue Shoes");
@@ -55,15 +57,9 @@ public class MyStepDefinitions {
     }
 
     @When("I provide billing details")
-    public void iProvideBillingDetails(List<Map<String, String>> billingDetails) {
+    public void iProvideBillingDetails() {
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.setBillingDetails(billingDetails.get(0).get("firstName"),
-                billingDetails.get(0).get("lastName"),
-                billingDetails.get(0).get("address_line1"),
-                billingDetails.get(0).get("city"),
-                billingDetails.get(0).get("state"),
-                billingDetails.get(0).get("zip"),
-                billingDetails.get(0).get("email"));
+        checkoutPage.setBillingDetails(billingDetails);
     }
 
     @And("I place an order")
