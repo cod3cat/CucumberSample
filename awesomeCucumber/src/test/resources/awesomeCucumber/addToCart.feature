@@ -1,4 +1,6 @@
 Feature: Add to cart
+
+  @smoke
   Rule: Add from store
     Scenario: Add one quantity to the cart
       Given I'm on the store page
