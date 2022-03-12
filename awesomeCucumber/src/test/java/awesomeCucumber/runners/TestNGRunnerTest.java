@@ -1,4 +1,3 @@
-/*
 package awesomeCucumber.runners;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
@@ -9,8 +8,8 @@ import org.testng.annotations.DataProvider;
         plugin = {"pretty", "html:target/cucumber.html"},
         features = "src/test/resources/awesomeCucumber",
         glue = "awesomeCucumber",
-        snippets = CucumberOptions.SnippetType.CAMELCASE,
-        tags = "@smoke"
+        snippets = CucumberOptions.SnippetType.CAMELCASE
+        //tags = "@smoke"
 )
 public class TestNGRunnerTest extends AbstractTestNGCucumberTests {
     @Override
@@ -18,4 +17,4 @@ public class TestNGRunnerTest extends AbstractTestNGCucumberTests {
     public Object[][] scenarios() {
         return super.scenarios();
     }
-}*/
+}
