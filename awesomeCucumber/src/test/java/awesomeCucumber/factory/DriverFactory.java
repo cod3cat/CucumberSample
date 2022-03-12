@@ -1,5 +1,6 @@
 package awesomeCucumber.factory;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,12 +13,12 @@ public class DriverFactory {
         WebDriver driver;
         switch (browser) {
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
                 break;
 
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
 
